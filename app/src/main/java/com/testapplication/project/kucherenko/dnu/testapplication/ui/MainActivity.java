@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccess()) {
                     dialog.hide();
                     Toast.makeText(MainActivity.this, "SuccessfullyLoaded", Toast.LENGTH_SHORT).show();
-                    matchList = response.body().getList();
-                    Log.e(TAG, matchList.size()+"");
+                    for (Match m : response.body().getList()) {
+                        if (m.getMatchday() == 4) matchList.add(m);
+                    }
+                    Log.e(TAG, matchList.size() + "");
                     recView = (RecyclerView) findViewById(R.id.recycler);
                     recView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    adapter = new MatchAdapter(matchList, MainActivity.this);
-                    Log.e(TAG, adapter.getItemCount()+"" );
-                    recView.setAdapter(adapter);
+                    recView.setAdapter(new MatchAdapter(matchList, MainActivity.this));
                     //adapter.notifyDataSetChanged();
                 }
             }
